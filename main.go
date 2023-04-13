@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	addr = flag.String("addr", "localhost:2379", "--addr=localhost:2379")
+	addr = flag.String("addr", "localhost:2379", "-addr=localhost:2379")
 	cli  *clientv3.Client
 	key  = "sample_key"
 )
