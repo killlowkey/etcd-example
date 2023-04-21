@@ -40,7 +40,8 @@ func main() {
 	//watchExample()
 	//txExample()
 	//delExample()
-	contextExample()
+	//contextExample()
+	doExample()
 }
 
 // insertExample etcd 数据插入
@@ -89,6 +90,17 @@ func contextExample() {
 	res, err := cli.Put(ctx, "context-example", "context")
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	log.Println(res)
+}
+
+// doExample
+func doExample() {
+	// OpPut、OpDelete、OpGet、OpTxn
+	res, err := cli.Do(context.Background(), clientv3.OpPut("do", "do"))
+	if err != nil {
+		panic(err)
 	}
 
 	log.Println(res)
