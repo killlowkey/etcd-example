@@ -38,7 +38,9 @@ func main() {
 	}()
 
 	//watchExample()
-	txExample()
+	//txExample()
+	//delExample()
+	contextExample()
 }
 
 // insertExample etcd 数据插入
@@ -61,6 +63,35 @@ func getExample() {
 		panic(err)
 	}
 	log.Println(res.Kvs)
+}
+
+// delExample etcd 数据删除
+func delExample() {
+	res, err := cli.Put(context.Background(), "del-key", "1")
+	if err != nil {
+		panic(res)
+	}
+	log.Printf("insert %v data successfully\n", res)
+
+	delRes, err := cli.Delete(context.Background(), "del-key")
+	if err != nil {
+		panic(err)
+	}
+	log.Printf("delete data：%v\n", delRes)
+}
+
+// contextExample 使用上下文来控制 GRPC 通信
+func contextExample() {
+	// time.Microsecond 必然超时
+	ctx, cancelFunc := context.WithTimeout(context.Background(), time.Microsecond)
+	defer cancelFunc()
+
+	res, err := cli.Put(ctx, "context-example", "context")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println(res)
 }
 
 // txExample 事务例子
